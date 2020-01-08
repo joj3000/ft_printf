@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 20:14:52 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:14:51 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/06 21:41:28 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ long int				cv_prec_ftoi(long double d)
 }
 
 /*
-int main()
-{
-	long double i = 1100001.0999996861231;
-	printf("%ld\n", cv_prec_ftoi(i));
-
-	printf("%s\n", dec_char(i));
-}
+**int main()
+**{
+**	long double i = 1100001.0999996861231;
+**	printf("%ld\n", cv_prec_ftoi(i));
+**
+**	printf("%s\n", dec_char(i));
+**}
 */

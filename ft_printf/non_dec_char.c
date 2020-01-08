@@ -6,13 +6,14 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 20:18:52 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:22:16 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/06 21:39:02 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char			*non_dec_char_pos(long double f, long double nb, char *non_dec)
+static char			*non_dec_char_pos(long double f,
+					long double nb, char *non_dec)
 {
 	int i;
 
@@ -32,7 +33,8 @@ static char			*non_dec_char_pos(long double f, long double nb, char *non_dec)
 	return (non_dec);
 }
 
-static char			*non_dec_char_neg(long double f, long double nb, char *non_dec)
+static char			*non_dec_char_neg(long double f,
+					long double nb, char *non_dec)
 {
 	int i;
 
@@ -60,9 +62,7 @@ char				*non_dec_char(long double f)
 	int			i;
 
 	if (ct_ndec_digit(f) == 0 && f != 0)
-	{	
 		return (ft_strdup("0"));
-	}
 	if (!(non_dec = (char *)malloc(sizeof(char) *
 		(ct_ndec_digit(f)) + 1)))
 		return (NULL);

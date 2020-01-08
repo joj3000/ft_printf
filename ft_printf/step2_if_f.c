@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ad_0_aftersp.c                                     :+:      :+:    :+:   */
+/*   step2_if_f.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/31 19:20:09 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 18:16:29 by jerbs            ###   ########.fr       */
+/*   Created: 2020/01/06 21:29:00 by jerbs             #+#    #+#             */
+/*   Updated: 2020/01/07 11:22:45 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ad_0_aftersp(char *s, int n)
+char			*step2_if_f(char *str, char *s, int i)
 {
-	int		i;
-	int		j;
-	char	*new;
+	char *tmp;
 
-	i = 0;
-	j = 0;
-	if (!(new = (char *)malloc(sizeof(char) * (strln(s) + n) + 1)))
-		return (0);
-	if (s[0] == ' ')
+	if (chk_flg(str, i, 'f', '+') == 1)
 	{
-		new[0] = ' ';
-		j++;
-		i++;
+		if (s[0] != '-')
+		{
+			tmp = ft_strjoin("+", s);
+			free(s);
+			return (tmp);
+		}
 	}
-	while (n != 0)
+	else if (chk_flg(str, i, 'f', ' ') == 1)
 	{
-		new[j] = '0';
-		n--;
-		j++;
+		if (s[0] != '-')
+		{
+			tmp = ft_strjoin(" ", s);
+			free(s);
+			return (tmp);
+		}
 	}
-	while (s[i])
-		new[j++] = s[i++];
-	new[j] = 0;
-	free(s);
-	return (new);
+	return (s);
 }

@@ -6,36 +6,38 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 10:18:37 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:27:15 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 20:44:34 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char			*steptwo_if_per(char *str, char *s, int i)
+static char			*step2_if_per(char *str, char *s, int i)
 {
-	int count;
+	int		count;
+	char	*tmp;
 
+	tmp = s;
 	count = chk_fld_wth(str, i, '%');
 	if (chk_flg(str, i, '%', '-') == 1)
 		while (count > 1)
 		{
-			s = ft_strjoin(s, " ");
+			tmp = ft_strjoin_free(tmp, " ");
 			count--;
 		}
 	else if (check_zero_flag(str, i, '%') == 1)
 		while (count > 1)
 		{
-			s = ft_strjoin("0", s);
+			tmp = ft_strjoin_free2("0", tmp);
 			count--;
 		}
 	else if (chk_fld_wth(str, i, '%') >= 2)
 		while (count > 1)
 		{
-			s = ft_strjoin(" ", s);
+			tmp = ft_strjoin_free2(" ", tmp);
 			count--;
 		}
-	return (s);
+	return (tmp);
 }
 
 void				detected_per(char *str, va_list va, int i)
@@ -44,7 +46,9 @@ void				detected_per(char *str, va_list va, int i)
 
 	(void)va;
 	tmp = ft_strdup("%");
-	ft_putstr(steptwo_if_per(str, tmp, i));
+	tmp = step2_if_per(str, tmp, i);
+	ft_putstr(tmp);
+	free(tmp);
 	return ;
 }
 
@@ -91,12 +95,15 @@ void				detected_per(char *str, va_list va, int i)
 **	}
 **}
 **
+**
 **int main()
 **{
+**	char *s;
 **
+**	s = ft_strdup("bonjour %%\n");
 **
-**      ft_printf("bonjour %-05%\n");
-**printf("--------\nbonjour %-05%");
-**
+**     ft_printf(s);
+**printf("--------\nbonjour %%");
+**free(s);
 **}
 */

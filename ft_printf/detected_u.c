@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 18:26:34 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:00:43 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 15:55:04 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,50 +29,51 @@ static char		*string_if_u(char *str, va_list va, int i)
 		length_u = ft_itoa_longlong(va_arg(va, int));
 	if (ft_strcmp("0", length_u) == 0 && chk_preciz(str, i, 'u') == 0
 		&& chk_flg(str, i, 'u', '.') == 1)
+	{
+		free(length_u);
 		return (ft_strdup(""));
+	}
 	return (length_u);
 }
 
 static char		*step3_part2(char *str, char *tmp, int i)
 {
-
-		if (chk_preciz(str, i, 'u') > strln(tmp))
-			tmp = ad_0_aftersign(tmp, chk_preciz(str, i, 'u') - strln(tmp));
-		if (chk_fld_wth(str, i, 'u') > strln(tmp))
-		{
-			if (chk_flg(str, i, 'u', '-') == 1)
-				tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'u') - strln(tmp));
-			else
-				tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'u') - strln(tmp));
-		}
+	if (chk_preciz(str, i, 'u') > strln(tmp))
+		tmp = ad_0_aftersign(tmp, chk_preciz(str, i, 'u') - strln(tmp));
+	if (chk_fld_wth(str, i, 'u') > strln(tmp))
+	{
+		if (chk_flg(str, i, 'u', '-') == 1)
+			tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'u') - strln(tmp));
+		else
+			tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'u') - strln(tmp));
+	}
 	return (tmp);
 }
 
-static char		*stepthree_if_u(char *str, char *s, int i)
+static char		*step3_if_u(char *str, char *s, int i)
 {
-	char *tmp;
+	char *t;
 
-	tmp = s;
+	t = s;
 	if (chk_preciz(str, i, 'u') == 0 && chk_flg(str, i, 'u', '.') == 0)
-	{	
+	{
 		if (check_zero_flag(str, i, 'u') == 1)
 		{
-			if (chk_fld_wth(str, i, 'u') > strln(tmp))
-				tmp = ad_0_aftersign(tmp, chk_fld_wth(str, i, 'u') - strln(tmp));
+			if (chk_fld_wth(str, i, 'u') > strln(t))
+				t = ad_0_aftersign(t, chk_fld_wth(str, i, 'u') - strln(t));
 		}
-		else if (chk_fld_wth(str, i, 'u') > strln(tmp))
+		else if (chk_fld_wth(str, i, 'u') > strln(t))
 		{
 			if (chk_flg(str, i, 'u', '-') == 1)
-				tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'u') - strln(tmp));
+				t = ad_fld_end(t, chk_fld_wth(str, i, 'u') - strln(t));
 			else
-				tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'u') - strln(tmp));
+				t = ad_fld_strt(t, chk_fld_wth(str, i, 'u') - strln(t));
 		}
+		return (t);
 	}
 	else
-	{
-		tmp = step3_part2(str, tmp, i);
-	}
-	return (tmp);
+		t = step3_part2(str, t, i);
+	return (t);
 }
 
 void			detected_u(char *str, va_list va, int i)
@@ -80,60 +81,62 @@ void			detected_u(char *str, va_list va, int i)
 	char *tmp;
 
 	tmp = string_if_u(str, va, i);
-	tmp = stepthree_if_u(str, tmp, i);
+	tmp = step3_if_u(str, tmp, i);
 	ft_putstr(tmp);
+	free(tmp);
 	return ;
 }
+
 /*
-int	detect_n_do(char *str, va_list va, int i)
-{
-	(void)va;
-	int j;
-
-	j = i;
-	while (str[j])
-	{
-		if (str[j] == 'u')
-		{
-			detected_u(str, va, i);
-			break;
-		}
-		j++;
-	}
-	return (j);
-}
-
-void	ft_printf(char *str, ...)
-{
-	va_list va;
-	int i;
-
-	i = 0;
-	if (str == NULL)
-	{
-		write(1, "No input arguments\n", 19);
-		return ;
-	}
-	va_start(va, str);
-	while (str[i])
-	{
-		if (str[i] == '%')
-		{
-			i = detect_n_do(str, va, i);
-		}
-		else
-			write(1, &str[i], 1);
-		i++;
-	}
-}
-
-int main()
-{
-
-int nb = 123;
-
-     ft_printf("%.5u", nb);
-printf("\n--------\n%.5u", nb);
-
-}
+**int	detect_n_do(char *str, va_list va, int i)
+**{
+**	(void)va;
+**	int j;
+**
+**	j = i;
+**	while (str[j])
+**	{
+**		if (str[j] == 'u')
+**		{
+**			detected_u(str, va, i);
+**			break;
+**		}
+**		j++;
+**	}
+**	return (j);
+**}
+**
+**void	ft_printf(char *str, ...)
+**{
+**	va_list va;
+**	int i;
+**
+**	i = 0;
+**	if (str == NULL)
+**	{
+**		write(1, "No input arguments\n", 19);
+**		return ;
+**	}
+**	va_start(va, str);
+**	while (str[i])
+**	{
+**		if (str[i] == '%')
+**		{
+**			i = detect_n_do(str, va, i);
+**		}
+**		else
+**			write(1, &str[i], 1);
+**		i++;
+**	}
+**}
+**
+**int main()
+**{
+**
+**int nb = 123;
+**
+**    ft_printf("%.5u", nb);
+**printf("\n--------\n%.5u", nb);
+**
+**}
 */

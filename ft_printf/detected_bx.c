@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 20:33:33 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:38:02 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 15:55:36 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ char			*string_if_bx(char *str, va_list va, int i)
 		length_bx = ft_bl_itoabase(va_arg(va, int), 16);
 	if (ft_strcmp("0", length_bx) == 0 && chk_preciz(str, i, 'X') == 0
 			&& chk_flg(str, i, 'X', '.') == 1)
+	{
+		free(length_bx);
 		return (ft_strdup(""));
+	}
 	return (length_bx);
 }
 
-static char		*steptwo_if_bx(char *str, char *s, int i)
+static char		*step2_if_bx(char *str, char *s, int i)
 {
 	char *tmp;
 
@@ -47,31 +50,28 @@ static char		*steptwo_if_bx(char *str, char *s, int i)
 	}
 	if (chk_flg(str, i, 'X', '#') == 1)
 	{
-			tmp = ft_strjoin("0X", s);
-			free(s);
-			return (tmp);
+		tmp = ft_strjoin("0X", s);
+		free(s);
+		return (tmp);
 	}
 	return (s);
 }
 
-
-
 static char		*step3_part2(char *str, char *tmp, int i)
 {
-
-		if (chk_preciz(str, i, 'X') > strln_x(tmp))
-			tmp = ad_0_after0x(tmp, chk_preciz(str, i, 'X') - strln_x(tmp));
-		if (chk_fld_wth(str, i, 'X') > strln(tmp))
-		{
-			if (chk_flg(str, i, 'X', '-') == 1)
-				tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'X') - strln(tmp));
-			else
-				tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'X') - strln(tmp));
-		}
+	if (chk_preciz(str, i, 'X') > strln_x(tmp))
+		tmp = ad_0_after0x(tmp, chk_preciz(str, i, 'X') - strln_x(tmp));
+	if (chk_fld_wth(str, i, 'X') > strln(tmp))
+	{
+		if (chk_flg(str, i, 'X', '-') == 1)
+			tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'X') - strln(tmp));
+		else
+			tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'X') - strln(tmp));
+	}
 	return (tmp);
 }
 
-static char		*stepthree_if_bx(char *str, char *s, int i)
+static char		*step3_if_bx(char *str, char *s, int i)
 {
 	char *tmp;
 
@@ -103,9 +103,10 @@ void			detected_bx(char *str, va_list va, int i)
 	char *tmp;
 
 	tmp = string_if_bx(str, va, i);
-	tmp = steptwo_if_bx(str, tmp, i);
-	tmp = stepthree_if_bx(str, tmp, i);
+	tmp = step2_if_bx(str, tmp, i);
+	tmp = step3_if_bx(str, tmp, i);
 	ft_putstr(tmp);
+	free(tmp);
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:34:30 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:15:35 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/06 21:43:41 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		ft_abs(long long int nb)
 	return (nb);
 }
 
-static char *max_min_cases(long long int value, int base)
+static char		*max_min_cases(long long int value, int base)
 {
 	if (value == 4294967295 && base == 16)
 		return (ft_strdup("FFFFFFFF"));

@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 20:16:12 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/05 21:23:25 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/06 21:53:01 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static void		part_2(char *s, int p, int i)
 {
 	int flag;
-	
+
 	flag = 1;
 	while (flag == 1)
 	{
 		if (s[i + p] == '.')
-			i--;	
+			i--;
 		if (s[i + p] == '9')
 		{
 			s[i + p] = '0';
@@ -53,9 +53,9 @@ void			increm_s(char *s, int p)
 		if (s[i + p] + 1 < '9')
 			s[i + p]++;
 		else
-		{	
-			part_2(s, p, i);	
-		}	
+		{
+			part_2(s, p, i);
+		}
 	}
 }
 
@@ -65,7 +65,7 @@ void			increm_s(char *s, int p)
 **{
 **	char *s;
 **	int p;
-**	
+**
 **	p = 1;
 **	s = ft_strdup("19.95991");
 **	increm_s(s, p);

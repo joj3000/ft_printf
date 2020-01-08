@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ad_0_aftersp.c                                     :+:      :+:    :+:   */
+/*   ft_strsub_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/31 19:20:09 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 18:16:29 by jerbs            ###   ########.fr       */
+/*   Created: 2020/01/07 16:28:54 by jerbs             #+#    #+#             */
+/*   Updated: 2020/01/07 20:44:00 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ad_0_aftersp(char *s, int n)
+char	*ft_strsub_free(char *s, int start, int len)
 {
+	char	*cpy;
 	int		i;
-	int		j;
-	char	*new;
 
 	i = 0;
-	j = 0;
-	if (!(new = (char *)malloc(sizeof(char) * (strln(s) + n) + 1)))
-		return (0);
-	if (s[0] == ' ')
+	if (!s)
+		return (NULL);
+	if (!(cpy = (char *)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	while (len)
 	{
-		new[0] = ' ';
-		j++;
+		cpy[i] = s[start + i];
+		len--;
 		i++;
 	}
-	while (n != 0)
-	{
-		new[j] = '0';
-		n--;
-		j++;
-	}
-	while (s[i])
-		new[j++] = s[i++];
-	new[j] = 0;
+	cpy[i] = 0;
 	free(s);
-	return (new);
+	return (cpy);
 }
+
+/*
+**#include <stdio.h>
+**int main()
+**{
+**	const char str[] = "this is a test";
+**
+**	printf("%s", ft_substr(str, 1, 15));
+**}
+*/

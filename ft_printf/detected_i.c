@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 18:15:13 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 10:59:32 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 15:54:04 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ static char		*string_if_i(char *str, va_list va, int i)
 		length_i = ft_itoa_longlong(va_arg(va, int));
 	if (ft_strcmp("0", length_i) == 0 && chk_preciz(str, i, 'i') == 0
 		&& chk_flg(str, i, 'i', '.') == 1)
+	{
+		free(length_i);
 		return (ft_strdup(""));
+	}
 	return (length_i);
 }
 
-static char		*steptwo_if_i(char *str, char *s, int i)
+static char		*step2_if_i(char *str, char *s, int i)
 {
 	char *tmp;
 
@@ -57,36 +60,22 @@ static char		*steptwo_if_i(char *str, char *s, int i)
 	}
 	return (s);
 }
-/*
-static char		*steptwo_if_i(char *str, char *s, int i)
-{
-	char *tmp;
 
-	if (chk_flg(str, i, 'i', '#') == 1)
-	{
-			tmp = ft_strjoin("0", s);
-			free(s);
-			return (tmp);
-	}
-	return (s);
-}
-*/
 static char		*step3_part2(char *str, char *tmp, int i)
 {
-
-		if (chk_preciz(str, i, 'i') > strln_sps(tmp))
-			tmp = ad_0_aftersps(tmp, chk_preciz(str, i, 'i') - strln_sps(tmp));
-		if (chk_fld_wth(str, i, 'i') > strln(tmp))
-		{
-			if (chk_flg(str, i, 'i', '-') == 1)
-				tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
-			else
-				tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
-		}
+	if (chk_preciz(str, i, 'i') > strln_sps(tmp))
+		tmp = ad_0_aftersps(tmp, chk_preciz(str, i, 'i') - strln_sps(tmp));
+	if (chk_fld_wth(str, i, 'i') > strln(tmp))
+	{
+		if (chk_flg(str, i, 'i', '-') == 1)
+			tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
+		else
+			tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
+	}
 	return (tmp);
 }
 
-static char		*stepthree_if_i(char *str, char *s, int i)
+static char		*step3_if_i(char *str, char *s, int i)
 {
 	char *tmp;
 
@@ -113,47 +102,19 @@ static char		*stepthree_if_i(char *str, char *s, int i)
 	return (tmp);
 }
 
-
-/*
-static char		*stepthree_if_i(char *str, char *s, int i) // free shit ??
-{
-	char *tmp;
-
-	tmp = s;
-	if (chk_preciz(str, i, 'i') > (int)strln_s(s))
-		tmp = ad_0_aftersign(s, chk_preciz(str, i, 'i') - strln_s(s));
-	if (chk_fld_wth(str, i, 'i') > strln(tmp))
-	{
-		if (chk_flg(str, i, 'i', '-') == 1)
-			tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
-		else
-			tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
-	}
-	else if (chk_fld_wth(str, i, 'i') > strln(tmp) && chk_flg(str, i, 'i', '0') == 1)
-		tmp = ad_0_aftersign(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
-	else if (chk_fld_wth(str, i, 'i') > strln(tmp))
-	{
-		if (chk_flg(str, i, 'i', '-') == 1)
-			tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
-		else
-			tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'i') - strln(tmp));
-	}
-	return (tmp);
-}
-*/
 void			detected_i(char *str, va_list va, int i)
 {
-	char *tmp;
-	int j;
+	char	*tmp;
+	int		j;
 
 	j = 0;
 	tmp = string_if_i(str, va, i);
-	tmp = steptwo_if_i(str, tmp, i);
-	tmp = stepthree_if_i(str, tmp, i);
+	tmp = step2_if_i(str, tmp, i);
+	tmp = step3_if_i(str, tmp, i);
 	ft_putstr(tmp);
+	free(tmp);
 	return ;
 }
-
 
 /*
 **int	detect_n_do(char *str, va_list va, int i)
@@ -178,7 +139,7 @@ void			detected_i(char *str, va_list va, int i)
 **{
 **	va_list va;
 **	int i;
-
+**
 **	i = 0;
 **	if (str == NULL)
 **	{

@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 17:48:08 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/04 19:46:52 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/06 21:50:26 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		ft_abs(long long int nb)
 	return (nb);
 }
 
-static char *max_min_cases(long long int value, int base)
+static char		*max_min_cases(long long int value, int base)
 {
 	if (value == 4294967295 && base == 8)
 		return (ft_strdup("37777777777"));
@@ -28,7 +28,7 @@ static char *max_min_cases(long long int value, int base)
 	return ("ntm");
 }
 
-char	*ft_ll_itoabase(long long int value, int base)
+char			*ft_ll_itoabase(long long int value, int base)
 {
 	char			*str;
 	long long int	size;
@@ -45,7 +45,7 @@ char	*ft_ll_itoabase(long long int value, int base)
 	while (tmp /= base)
 		size++;
 	size++;
-	str = (char *)malloc(sizeof(char) * size  + 1);
+	str = (char *)malloc(sizeof(char) * size + 1);
 	str[size] = '\0';
 	while (size > 0)
 	{

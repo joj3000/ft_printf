@@ -6,13 +6,13 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/31 18:26:43 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:09:45 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 20:52:54 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char		*stepthree_if_p(char *str, char *s, int i)
+static char		*step3_if_p(char *str, char *s, int i)
 {
 	char *tmp;
 
@@ -32,8 +32,9 @@ void			detected_p(char *str, va_list va, int i)
 	char *tmp;
 
 	tmp = ft_hexadress_tostr(va_arg(va, void *));
-	tmp = stepthree_if_p(str, tmp, i);
+	tmp = step3_if_p(str, tmp, i);
 	ft_putstr(tmp);
+	free(tmp);
 	return ;
 }
 

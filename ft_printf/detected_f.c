@@ -6,106 +6,82 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/01 11:18:07 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:05:44 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 16:33:23 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char *preciz_part2(char *str, int i, char *s, int ct)
+static char			*preciz_part2(char *str, int i, char *s, int ct)
 {
 	int count;
 
 	count = 0;
 	if (ct >= 6)
 	{
-		increm_s(s, chk_preciz(str, i, 'f')); 
+		increm_s(s, chk_preciz(str, i, 'f'));
 		while (ct > 6)
 		{
-			s = ft_strjoin(s, "0");
+			s = ft_strjoin_free(s, "0");
 			ct--;
 		}
 	}
 	else
-	{	
+	{
 		ct = 6 - ct;
-		s = ft_strsub(s, 0, strln(s) - ct);
+		s = ft_strsub_free(s, 0, strln(s) - ct);
+		return (s);
 	}
 	return (s);
 }
 
-static char *preciz(char *str, char *s, int i)
+static char			*preciz(char *str, char *s, int i)
 {
 	int ct;
 
 	if (chk_preciz(str, i, 'f') == 0 && chk_flg(str, i, 'f', '.') == 1)
 	{
 		if (locate_char_index(s, '.') != -41)
-		{	
-			if (s[locate_char_index(s, '.') + 1] >= 53)
+		{
+			if (s[locate_char_index(s, '.') + 1] >= '5')
 				s[locate_char_index(s, '.') - 1]++;
 		}
 		if (chk_flg(str, i, 'f', '#'))
-			s = ft_strsub(s, 0, (size_t)locate_char_index(s, '.') + 1);
+			s = ft_strsub_free(s, 0, locate_char_index(s, '.') + 1);
 		else
-			s = ft_strsub(s, 0, (size_t)locate_char_index(s, '.'));
+			s = ft_strsub_free(s, 0, locate_char_index(s, '.'));
 	}
 	else if (chk_preciz(str, i, 'f') > 0)
 	{
 		ct = chk_preciz(str, i, 'f');
-		s = preciz_part2(str, i, s, ct);	
+		s = preciz_part2(str, i, s, ct);
 	}
 	return (s);
 }
 
-static char		*steptwo_if_f(char *str, char *s, int i)
+static char			*step3_part2(char *str, char *tmp, int i)
 {
-	char *tmp;
-
-	if (chk_flg(str, i, 'f', '+') == 1)
+	if (chk_fld_wth(str, i, 'f') > strln(tmp))
 	{
-		if (s[0] != '-')
+		if (check_zero_flag(str, i, 'f') == 1)
 		{
-			tmp = ft_strjoin("+", s);
-			free(s);
-			return (tmp);
-		}
-	}
-	else if (chk_flg(str, i, 'f', ' ') == 1)
-	{
-		if (s[0] != '-')
-		{
-			tmp = ft_strjoin(" ", s);
-			free(s);
-			return (tmp);
-		}
-	}
-	return (s);
-}
-
-static char		*step3_part2(char *str, char *tmp, int i)
-{
-		if (chk_fld_wth(str, i, 'f') > strln(tmp))
-		{
-			if (check_zero_flag(str, i, 'f') == 1)
-			{
-				if (chk_flg(str, i, 'f', '-') == 1)
-					tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'f') - strln(tmp));
-				else
-					tmp = ad_0_aftersps(tmp, chk_fld_wth(str, i, 'f') - strln(tmp));
-			}
+			if (chk_flg(str, i, 'f', '-') == 1)
+				tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'f') - strln(tmp));
 			else
-			{	
-				if (chk_flg(str, i, 'f', '-') == 1)
-					tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'f') - strln(tmp));
-				else
-					tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'f') - strln(tmp));
-			}
+				tmp = ad_0_aftersps(tmp, chk_fld_wth(str, i, 'f') - strln(tmp));
 		}
+		else
+		{
+			if (chk_flg(str, i, 'f', '-') == 1)
+				tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'f') - strln(tmp));
+			else
+				tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'f') - strln(tmp));
+		}
+	}
 	return (tmp);
 }
 
-static char		*stepthree_if_f(char *str, char *s, int i)
+static char			*step3_if_f(char *str, char *s, int i)
 {
 	char *tmp;
 
@@ -132,17 +108,17 @@ static char		*stepthree_if_f(char *str, char *s, int i)
 	return (tmp);
 }
 
-void			detected_f(char *str, va_list va, int i)
+void				detected_f(char *str, va_list va, int i)
 {
 	char *tmp;
 
 	tmp = string_if_f(str, va, i);
-	tmp = steptwo_if_f(str, tmp, i);
+	tmp = step2_if_f(str, tmp, i);
 	tmp = ad_init_preciz(tmp);
 	tmp = preciz(str, tmp, i);
-	tmp = stepthree_if_f(str, tmp, i);
-	
+	tmp = step3_if_f(str, tmp, i);
 	ft_putstr(tmp);
+	free(tmp);
 	return ;
 }
 

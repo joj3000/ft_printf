@@ -6,30 +6,16 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 12:04:52 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:16:40 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/06 21:40:40 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/*
-static void			gotcha_bitch(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i] != '.')
-		i++;
-	i++;
-	s[i]--;
-	return ;
-}
-*/
-
 char				*ft_dtoa(double d)
 {
-	char	*s;
-	long double f;
+	char		*s;
+	long double	f;
 
 	f = d;
 	if (f == 0)
@@ -49,12 +35,12 @@ char				*ft_dtoa(double d)
 }
 
 /*
-int main()
-{
-	long double f;
-	f = -21.0112359815641251;
-//printf("%d\n", ct_ndec_digit(f));
-printf("%s\n", ft_dtoa(f));
-//ft_dtoa(f);
-}
+**int main()
+**{
+**	long double f;
+**	f = -21.0112359815641251;
+**printf("%d\n", ct_ndec_digit(f));
+**printf("%s\n", ft_dtoa(f));
+**ft_dtoa(f);
+**}
 */

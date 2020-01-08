@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:03:14 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:32:10 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 16:32:34 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../LIBFT/libft.h"
 # include <stdarg.h>
+# include <stdlib.h>
 
 void		detected_d(char *str, va_list va, int i);
 void		detected_i(char *str, va_list va, int i);
@@ -40,34 +41,39 @@ char		*ad_0_aftersp(char *s, int nb_zero);
 char		*ad_0_aftersps(char *s, int nb_zero);
 char		*ad_fld_strt(char *s, int nb_space);
 char		*ad_fld_end(char *s, int nb_space);
+char		*ad_init_preciz(char *s);
+char		*string_if_f(char *str, va_list va, int i);
+char		*step2_if_f(char *str, char *s, int i);
+char		*non_dec_char(long double f);
+char		*dec_char(long double f);
+char		chk_lng(char *str, int i, char specifier);
+char		which_flag(char *str, int i);
+char		*ft_strjoin_free(char *s1, char *s2);
+char		*ft_strjoin_free2(char *s1, char *s2);
+char		*ft_strsub_free(char *s, int start, int len);
+
 int			chk_preciz(char *str, int i, char specifier);
 int			chk_fld_wth(char *str, int i, char specifier);
 int			chk_flg(char *str, int i, char specifier, char flag);
-char		chk_lng(char *str, int i, char specifier);
 int			check_zero_flag(char *str, int i, char specifier);
 int			strln(char *s);
 int			strln_x(char *s);
 int			strln_s(char *s);
 int			strln_sp(char *s);
 int			strln_sps(char *s);
-char		which_flag(char *str, int i);
 int			ct_ndec_digit(long double f);
-long double	get_dec(long double f);
-long double	get_dec_neg(long double f);
 int			is_dec(long double f);
-long int			cv_prec_ftoi(long double d);
-char		*non_dec_char(long double f);
-char		*dec_char(long double f);
-void		ft_printf(char *str, ...);
-
-void		correct_back_ad01(char *s);
-
+int			is_s_dec(char *s);
 int			ct_af_dot(char *s);
 int			locate_char_index(char *s, char c);
-int			is_s_dec(char *s);
-char		*ad_init_preciz(char *s);
-char		*string_if_f(char *str, va_list va, int i);
 
-void			increm_s(char *s, int p);
+long double	get_dec(long double f);
+long double	get_dec_neg(long double f);
+
+long int	cv_prec_ftoi(long double d);
+
+void		ft_printf(char *str, ...);
+void		correct_back_ad01(char *s);
+void		increm_s(char *s, int p);
 
 #endif

@@ -6,11 +6,26 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 19:28:04 by jerbs             #+#    #+#             */
-/*   Updated: 2019/12/30 18:07:50 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 20:53:11 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int		malloc_count(unsigned long adr)
+{
+	int	count;
+	int	r;
+
+	count = 0;
+	while (adr >= 1)
+	{
+		r = adr % 16;
+		adr = (adr - r) / 16;
+		count++;
+	}
+	return (count);
+}
 
 char	*ft_hexadress_tostr(void *p)
 {
@@ -19,31 +34,42 @@ char	*ft_hexadress_tostr(void *p)
 	char			*res;
 	int				i;
 
-	if (!(res = (char *)malloc(sizeof(char) * 16) + 1))
-		return (0);
+	if (!p)
+		return (ft_strdup("0x0"));
 	adr = (unsigned long)p;
+	if (!(res = (char *)malloc(sizeof(char) * malloc_count(adr) + 1)))
+		return (0);
+	res[malloc_count(adr)] = 0;
 	base = "0123456789abcdef";
 	i = 0;
-	while ((adr / 16) > 0)
+	while (adr >= 1)
 	{
 		res[i] = base[(adr % 16)];
-		adr /= 16;
+		adr = (adr - (adr % 16)) / 16;
 		i++;
 	}
-	res[i] = base[(adr % 16)];
-	res[i + 1] = 'x';
-	res[i + 2] = '0';
-	res[i + 3] = 0;
-	return (ft_strrev(ft_strdup(res)));
+	ft_strrev(res);
+	res = ft_strjoin_free2("0x", res);
+	return (res);
 }
 
 /*
 **int main (void)
 **{
-**char *d = "h";
-**
-**printf("%p\n",(void *) d);
-**printf("%s\n", ft_hexadress_tostr(d));
-**
+**	char *s;
+**	s = "pd";
+**	char *d;
+**	while (1)
+**	{
+**	d = ft_hexadress_tostr(s);
+**	free(d);
+**	}
+**	d = ft_hexadress_tostr(s);
+**	printf("%d\n", malloc_count(adr));
+**	printf("%p\n", (void*)s);
+**	printf("%p\n",(void *) d);
+**	printf("%s\n", s);
+***	free(d);
+**	free(d);
 **}
 */

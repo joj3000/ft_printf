@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 18:59:42 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/06 11:01:12 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 15:55:17 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,63 +31,63 @@ static char		*string_if_o(char *str, va_list va, int i)
 		return (ft_strdup(""));
 	if (ft_strcmp("0", length_o) == 0 && chk_preciz(str, i, 'o') == 0
 			&& chk_flg(str, i, 'o', '.') == 1)
+	{
+		free(length_o);
 		return (ft_strdup(""));
+	}
 	return (length_o);
 }
 
-static char		*steptwo_if_o(char *str, char *s, int i)
+static char		*step2_if_o(char *str, char *s, int i)
 {
 	char *tmp;
 
 	if (chk_flg(str, i, 'o', '#') == 1)
 	{
-			tmp = ft_strjoin("0", s);
-			free(s);
-			return (tmp);
+		tmp = ft_strjoin("0", s);
+		free(s);
+		return (tmp);
 	}
 	return (s);
 }
 
 static char		*step3_part2(char *str, char *tmp, int i)
 {
-
-		if (chk_preciz(str, i, 'o') > strln(tmp))
-			tmp = ad_0_aftersign(tmp, chk_preciz(str, i, 'o') - strln(tmp));
-		if (chk_fld_wth(str, i, 'o') > strln(tmp))
-		{
-			if (chk_flg(str, i, 'o', '-') == 1)
-				tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'o') - strln(tmp));
-			else
-				tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'o') - strln(tmp));
-		}
+	if (chk_preciz(str, i, 'o') > strln(tmp))
+		tmp = ad_0_aftersign(tmp, chk_preciz(str, i, 'o') - strln(tmp));
+	if (chk_fld_wth(str, i, 'o') > strln(tmp))
+	{
+		if (chk_flg(str, i, 'o', '-') == 1)
+			tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'o') - strln(tmp));
+		else
+			tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'o') - strln(tmp));
+	}
 	return (tmp);
 }
 
-static char		*stepthree_if_o(char *str, char *s, int i)
+static char		*step3_if_o(char *str, char *s, int i)
 {
-	char *tmp;
+	char *t;
 
-	tmp = s;
+	t = s;
 	if (chk_preciz(str, i, 'o') == 0 && chk_flg(str, i, 'o', '.') == 0)
 	{
 		if (check_zero_flag(str, i, 'o') == 1)
 		{
-			if (chk_fld_wth(str, i, 'o') > strln(tmp))
-				tmp = ad_0_aftersign(tmp, chk_fld_wth(str, i, 'o') - strln(tmp));
+			if (chk_fld_wth(str, i, 'o') > strln(t))
+				t = ad_0_aftersign(t, chk_fld_wth(str, i, 'o') - strln(t));
 		}
-		else if (chk_fld_wth(str, i, 'o') > strln(tmp))
+		else if (chk_fld_wth(str, i, 'o') > strln(t))
 		{
 			if (chk_flg(str, i, 'o', '-') == 1)
-				tmp = ad_fld_end(tmp, chk_fld_wth(str, i, 'o') - strln(tmp));
+				t = ad_fld_end(t, chk_fld_wth(str, i, 'o') - strln(t));
 			else
-				tmp = ad_fld_strt(tmp, chk_fld_wth(str, i, 'o') - strln(tmp));
+				t = ad_fld_strt(t, chk_fld_wth(str, i, 'o') - strln(t));
 		}
 	}
 	else
-	{
-		tmp = step3_part2(str, tmp, i);
-	}
-	return (tmp);
+		t = step3_part2(str, t, i);
+	return (t);
 }
 
 void			detected_o(char *str, va_list va, int i)
@@ -95,10 +95,10 @@ void			detected_o(char *str, va_list va, int i)
 	char *tmp;
 
 	tmp = string_if_o(str, va, i);
-//printf(">>%s<<", tmp);
-	tmp = steptwo_if_o(str, tmp, i);
-	tmp = stepthree_if_o(str, tmp, i);
+	tmp = step2_if_o(str, tmp, i);
+	tmp = step3_if_o(str, tmp, i);
 	ft_putstr(tmp);
+	free(tmp);
 	return ;
 }
 

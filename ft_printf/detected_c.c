@@ -6,7 +6,7 @@
 /*   By: jerbs <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/31 16:58:45 by jerbs             #+#    #+#             */
-/*   Updated: 2020/01/04 18:56:48 by jerbs            ###   ########.fr       */
+/*   Updated: 2020/01/07 15:54:15 by jerbs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char		*string_if_c(char *str, va_list va, int i)
 	return (length_c);
 }
 
-static char		*stepthree_if_c(char *str, char *s, int i)
+static char		*step3_if_c(char *str, char *s, int i)
 {
 	char *tmp;
 
@@ -49,10 +49,12 @@ void			detected_c(char *str, va_list va, int i)
 	char *tmp;
 
 	tmp = string_if_c(str, va, i);
-	tmp = stepthree_if_c(str, tmp, i);
+	tmp = step3_if_c(str, tmp, i);
 	ft_putstr(tmp);
+	free(tmp);
 	return ;
 }
+
 /*
 **int				detect_n_do(char *str, va_list va, int i)
 **{
